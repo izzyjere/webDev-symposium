@@ -1,0 +1,174 @@
+﻿@page "/"
+<div>
+	 <EditForm Model="Model" OnValidSubmit="@Process" class="row col-lg-4 pull-right">
+
+        <h3>Incidents </h3>
+        <hr>
+        <div class="inline">
+	    <div class="col-md-4">
+                <label for="officer">
+                    Officer
+                </label>
+
+                <InputSelect TValue= "int" id="officer" @bind-Value="@Model.InvestigatingOfficerId" class="form-control">
+                    @foreach (var officer in officers)
+                    {
+                        <option value="@officer.Id">@officer.FirstName @officer.LastName</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col-md-4">
+                <label for="date">
+                    Date
+                </label>
+               <InputDate id="date" @bind-Value="@Model.IncidentDate" class="form-control"></InputDate>
+            </div>
+            <div class="col-md-4">
+                <label for="dep">
+                    Status
+                </label>
+                <InputSelect TValue="string" id="status" @bind-Value="@Model.Status" class="form-control">
+                        <option value="Open">Open</option>
+			            <option value="Closed">Closed</option>                    
+                </InputSelect>
+            </div>
+            <div class="col-md-4">
+                <label for="category">
+                    Category
+                </label>
+
+                <InputText id="category" @bind-Value="@Model.IncidentCategory" class="form-control"/>             
+            </div>
+            <div class="col-md-4 ">
+                <label for="loco">
+                    Location
+                </label>
+                <InputText id="loco" @bind-Value="@Model.IncidentLocation" class="form-control"/>
+            </div>
+            <div class="col-md-4">
+                <label for="findings">
+                    Findings
+                </label>
+               <InputText id="findings" @bind-Value="@Model.InvestigationFindings" class="form-control"/>
+            </div>
+	     <div class="col-md-4">
+                <label for="rss">
+                    Resolution
+                </label>
+               <InputText id="rss" @bind-Value="@Model.Resolution" class="form-control"/>
+            </div>
+	    <div class="col-md-4">
+                <label for="datec">
+                    Date Closed
+                </label>
+               <InputDate id="datec" @bind-Value="@Model.DateClosed" class="form-control"></InputDate>
+            </div>
+            <div style="padding-top:2rem;" class="col-lg-4">
+
+                <button type="submit" class="btn btn-success btn-sm"><i class="oi oi-file"></i>Save</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+<table class="table table-striped table-hover">
+<thead>
+	<tr>
+		<th>Date</th>		
+		<th>Category</th>
+		<th>Status</th>
+		<th>Incident Location</th>
+		<th>Investigation Findings</th>
+		<th>Resolution</th>
+		<th>DateClosed</th>
+		<th>Investigating Officer</th>
+		<th>Actions</th>
+	</tr>
+</thead>
+<tbody>
+   @foreach (var item in tableData)
+   {
+       <tr>
+	    <td>@item.IncidentDate.ToString("dd MMMM yyyy")</td>
+	    <td>@item.IncidentCategory</td>
+	    <td>@item.Status</td>
+	    <td>@item.IncidentLocation</td>
+	    <td>@item.InvestigationFindings</td>
+	    <td>@item.Resolution</td>
+	    <td>@item.DateClosed.ToString("dd MMMM yyyy")</td>
+	    <td>@item.InvestigatingOfficer.FirstName @item.InvestigatingOfficer.LastName</td>
+	    <td>
+		    <button @onclick="()=>ToggleEdit(item)" class="btn btn-warning btn-sm"><i class="oi oi-pencil"></i></button>
+		    <button @onclick="()=>ToggleDelete(item)" class="btn btn-danger btn-sm"><i class="oi oi-trash"></i></button>
+	    </td>
+	    
+       </tr>
+   }
+</tbody>
+</table>
+<style>
+	.input{
+		width:250px;
+	}
+     .inline {
+        display: flex;
+        justify-content: space-between;
+    }
+    .col-md-4 {
+        padding: 0 1em 0 0;
+        width: 150px;
+    }
+</style>
+@code {
+   
+   List<Incident> tableData { get; set; } = new ();
+   List<InvestigatingOfficer> officers {get; set;} = new();
+   Incident Model {get; set;} = new();
+
+   
+
+		protected override void OnInitialized()
+		{
+		    LoadData();
+		}
+
+		
+
+   void Process()
+   {
+        if(Model.Id == 0)
+        {
+            if(incidentService.Add(Model))
+            {
+                LoadData();
+            }
+            
+        }
+        else
+        {
+            if(incidentService.Update(Model))
+            {
+                LoadData();
+            }    
+        }
+   }
+   void LoadData()
+   {   
+       Model = new();
+       tableData = incidentService.GetAll();
+       officers = investigatingOfficerService.GetAll();
+       StateHasChanged();
+   }
+   void ToggleEdit(Incident record)
+   {
+       Model = record;
+   }
+   void ToggleDelete(Incident record)
+   {
+      if(incidentService.Delete(record))
+      {
+          LoadData();
+      }
+   }
+   
+   
+}
