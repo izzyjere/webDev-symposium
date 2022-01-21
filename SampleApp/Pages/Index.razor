@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-4">
                <label for="date">Date</label>
-               <InputDate id="date" @bind-Value="@Model.IncidentDate" class="form-control"></InputDate>
+               <InputDate id="date" @bind-Value="@Model.IncidentDate" class="form-control"/>
             </div>
             <div class="col-md-4">
                 <label for="status">Status</label>
@@ -42,7 +42,7 @@
            </div>
 	      <div class="col-md-4">
                 <label for="datec">Date Closed</label>
-                <InputDate id="datec" @bind-Value="@Model.DateClosed" class="form-control"></InputDate>
+                <InputDate id="datec" @bind-Value="@Model.DateClosed" class="form-control"/>
           </div>
 	</div> 
     <div  class="col-lg-4 pt-4">
@@ -54,39 +54,39 @@
 
 <table class="table table-striped table-bordered table-hover mt-4">
     <caption>List of Incidents</caption>
-<thead>
-	<tr>
-		<th>Date</th>		
-		<th>Category</th>
-		<th>Status</th>
-		<th>Incident Location</th>
-		<th>Investigation Findings</th>
-		<th>Resolution</th>
-		<th>DateClosed</th>
-		<th>Investigating Officer</th>
-		<th>Actions</th>
-	</tr>
-</thead>
-<tbody>
-   @foreach (var item in tableData)
-   {
-       <tr>
-	    <td>@item.IncidentDate.ToString("dd MMMM yyyy")</td>
-	    <td>@item.IncidentCategory</td>
-	    <td>@item.Status</td>
-	    <td>@item.IncidentLocation</td>
-	    <td>@item.InvestigationFindings</td>
-	    <td>@item.Resolution</td>
-	    <td>@item.DateClosed.ToString("dd MMMM yyyy")</td>
-	    <td>@item.InvestigatingOfficer.FirstName @item.InvestigatingOfficer.LastName</td>
-	    <td>
-		    <button @onclick="()=>ToggleEdit(item)" class="btn btn-warning btn-sm"><i class="oi oi-pencil"></i></button>
-		    <button @onclick="()=>ToggleDelete(item)" class="btn btn-danger btn-sm"><i class="oi oi-trash"></i></button>
-	    </td>
-	    
-       </tr>
-   }
-</tbody>
+    <thead>
+        <tr>
+            <th>Date</th>		
+            <th>Category</th>
+            <th>Status</th>
+            <th>Incident Location</th>
+            <th>Investigation Findings</th>
+            <th>Resolution</th>
+            <th>DateClosed</th>
+            <th>Investigating Officer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in tableData)
+    {
+        <tr>
+            <td>@item.IncidentDate.ToString("dd MMMM yyyy")</td>
+            <td>@item.IncidentCategory</td>
+            <td>@item.Status</td>
+            <td>@item.IncidentLocation</td>
+            <td>@item.InvestigationFindings</td>
+            <td>@item.Resolution</td>
+            <td>@item.DateClosed.ToString("dd MMMM yyyy")</td>
+            <td>@item.InvestigatingOfficer.FirstName @item.InvestigatingOfficer.LastName</td>
+            <td>
+                <button @onclick="()=>ToggleEdit(item)" class="btn btn-warning btn-sm"><i class="oi oi-pencil"></i></button>
+                <button @onclick="()=>ToggleDelete(item)" class="btn btn-danger btn-sm"><i class="oi oi-trash"></i></button>
+            </td>
+            
+        </tr>
+    }
+    </tbody>
 </table>
 <style>
 	
