@@ -1,7 +1,5 @@
 global using System.ComponentModel.DataAnnotations;
 namespace SampleApp.Models;
-
-
 public class Incident
 {
         [Key]
@@ -15,7 +13,5 @@ public class Incident
 	public string Resolution {get; set;}
 	public DateTime DateClosed {get; set;}
 	public InvestigatingOfficer InvestigatingOfficer { get; set; }
-
-	
 
 }

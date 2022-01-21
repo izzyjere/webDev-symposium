@@ -30,8 +30,7 @@ public class IncidentService
 		return true; 
 	    }
 	    catch 
-	    {
-		
+	    {		
 		return false;
 	    }
 	}
@@ -44,8 +43,7 @@ public class IncidentService
 		return true; 
 	    }
 	    catch 
-	    {
-		
+	    {		
 		return false;
 	    }
 	}
